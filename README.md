@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Wiener Linien Display
 
-## Getting Started
+A real-time departure board for Vienna public transport, designed for Raspberry Pi kiosk displays.
 
-First, run the development server:
+## Features
+- Real-time departure information
+- Auto-refresh every 30 seconds
+- Dark theme for better visibility
+- Fullscreen kiosk mode
 
+## Development Setup
+
+1. Clone and install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/paulpaul168/wiener-display.git
+cd wiener-display
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Run the development server:
+```bash
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Raspberry Pi Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Install required packages:
+```bash
+sudo apt update
+sudo apt install -y nodejs npm chromium-browser
+```
 
-## Learn More
+2. Clone and build the application:
+```bash
+git clone https://github.com/paulpaul168/wiener-display.git
+cd wiener-display
+npm install
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+3. Create startup script:
+```bash
+mkdir -p ~/.config/autostart
+cat > ~/.config/autostart/wiener-display.desktop << EOL
+[Desktop Entry]
+Type=Application
+Name=Wiener Display
+Exec=chromium-browser --kiosk --disable-restore-session-state http://localhost:3000
+X-GNOME-Autostart-enabled=true
+EOL
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. Create service for the Next.js server:
+```bash
+sudo tee /etc/systemd/system/wiener-display.service << EOL
+[Unit]
+Description=Wiener Display Next.js Server
+After=network.target
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+[Service]
+Type=simple
+User=$USER
+WorkingDirectory=/home/$USER/wiener-display
+ExecStart=/usr/bin/npm start
+Restart=always
 
-## Deploy on Vercel
+[Install]
+WantedBy=multi-user.target
+EOL
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. Enable and start:
+```bash
+sudo systemctl enable wiener-display
+sudo systemctl start wiener-display
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+6. Configure auto-login:
+   - Run: `sudo raspi-config`
+   - Go to: System Options → Boot / Auto Login
+   - Select: Desktop Autologin
+
+7. Reboot:
+```bash
+sudo reboot
+```
+
+## Troubleshooting
+
+Check if server is running:
+```bash
+sudo systemctl status wiener-display
+```
+
+## Ansible Deployment
+
+For automated deployment, you can use the provided Ansible playbook:
+
+1. Install Ansible on your control machine:
+```bash
+sudo apt install ansible
+```
+
+2. Add your Raspberry Pi's IP to the inventory:
+```bash
+echo "raspberry.local ansible_user=pi" > inventory.ini
+```
+
+3. Run the playbook:
+```bash
+ansible-playbook -i inventory.ini deploy.yml
+```
+
+    

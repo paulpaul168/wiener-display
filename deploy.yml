@@ -1,0 +1,73 @@
+---
+- name: Deploy Wiener Display
+  hosts: all
+  become: yes
+  vars:
+    app_dir: /home/{{ ansible_user }}/wiener-display
+    
+  tasks:
+    - name: Install required packages
+      apt:
+        name:
+          - nodejs
+          - npm
+          - chromium-browser
+        update_cache: yes
+        
+    - name: Clone repository
+      git:
+        repo: https://github.com/yourusername/wiener-display.git
+        dest: "{{ app_dir }}"
+        
+    - name: Install npm dependencies
+      npm:
+        path: "{{ app_dir }}"
+        
+    - name: Build application
+      command: npm run build
+      args:
+        chdir: "{{ app_dir }}"
+        
+    - name: Create autostart directory
+      file:
+        path: /home/{{ ansible_user }}/.config/autostart
+        state: directory
+        mode: '0755'
+        
+    - name: Configure kiosk autostart
+      copy:
+        dest: /home/{{ ansible_user }}/.config/autostart/wiener-display.desktop
+        content: |
+          [Desktop Entry]
+          Type=Application
+          Name=Wiener Display
+          Exec=chromium-browser --kiosk --disable-restore-session-state http://localhost:3000
+          X-GNOME-Autostart-enabled=true
+          
+    - name: Create systemd service
+      copy:
+        dest: /etc/systemd/system/wiener-display.service
+        content: |
+          [Unit]
+          Description=Wiener Display Next.js Server
+          After=network.target
+          
+          [Service]
+          Type=simple
+          User={{ ansible_user }}
+          WorkingDirectory={{ app_dir }}
+          ExecStart=/usr/bin/npm start
+          Restart=always
+          
+          [Install]
+          WantedBy=multi-user.target
+          
+    - name: Enable and start service
+      systemd:
+        name: wiener-display
+        enabled: yes
+        state: started
+        daemon_reload: yes
+        
+    - name: Configure autologin
+      command: raspi-config nonint do_boot_behaviour B4 

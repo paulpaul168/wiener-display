@@ -1,0 +1,136 @@
+.main {
+    min-height: 100vh;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding: 2rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.clock {
+    font-size: 4rem;
+    font-weight: 700;
+    color: #00ff4c;
+    font-family: monospace;
+    text-shadow: 0 0 10px rgba(0, 255, 76, 0.3);
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin: 0;
+    text-align: center;
+    color: #ffffff;
+}
+
+.departureBoard {
+    background: #2a2a2a;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.boardHeader {
+    display: grid;
+    grid-template-columns: 120px 120px 1fr;
+    padding: 1rem;
+    background: #333;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: #888;
+}
+
+.departures {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.departure {
+    display: grid;
+    grid-template-columns: 120px 120px 1fr;
+    padding: 1rem;
+    background: #222;
+    border-radius: 8px;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.departure:hover {
+    background: #2d2d2d;
+}
+
+.time {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #00ff4c;
+}
+
+.line {
+    font-size: 1.25rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.accessible {
+    color: #00ff4c;
+    font-size: 1.25rem;
+}
+
+.destination {
+    font-size: 1.25rem;
+    color: #ffffff;
+}
+
+.footer {
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+    padding-top: 1rem;
+}
+
+@media (max-width: 768px) {
+    .main {
+        padding: 1rem;
+    }
+
+    .clock {
+        font-size: 3rem;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .boardHeader,
+    .departure {
+        grid-template-columns: 80px 80px 1fr;
+        font-size: 0.9rem;
+    }
+
+    .time {
+        font-size: 1.25rem;
+    }
+
+    .line,
+    .destination {
+        font-size: 1rem;
+    }
+}

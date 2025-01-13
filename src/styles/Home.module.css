@@ -122,6 +122,17 @@
     padding-top: 2rem;
 }
 
+.error {
+    text-align: center;
+    padding: 2rem;
+    color: #ff4c4c;
+    font-size: 1.25rem;
+    font-weight: 500;
+    background: #1a1a1a;
+    border-radius: 12px;
+    border: 1px solid #333;
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 1rem;

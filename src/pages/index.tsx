@@ -46,7 +46,12 @@ export default function Home() {
 
             setStationName(station);
             setDepartures(deps);
-            setLastUpdate(new Date().toLocaleTimeString());
+            setLastUpdate(new Date().toLocaleTimeString('de-AT', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            }));
         } catch (error) {
             console.error('Error fetching data:', error);
         }

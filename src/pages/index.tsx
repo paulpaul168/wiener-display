@@ -47,6 +47,8 @@ export default function Home() {
             const response = await fetch('/api/departures');
             const data: ApiResponse = await response.json();
 
+            console.log('API Response:', data);
+
             setLastUpdate(new Date().toLocaleTimeString('de-AT', {
                 hour: '2-digit',
                 minute: '2-digit',
@@ -60,11 +62,17 @@ export default function Home() {
             }
 
             const station = data.data.monitors[0].locationStop.properties.title;
-            const deps = data.data.monitors[0].lines[0].departures.departure.slice(0, 5);
+            const allDepartures = data.data.monitors.flatMap(monitor =>
+                monitor.lines.flatMap(line => line.departures.departure)
+            );
+            console.log('All Departures:', allDepartures);
+            const cityDepartures = allDepartures.filter(dep => !dep.vehicle.towards.toLowerCase().includes('nußdorf')).slice(0, 5);
+
+            console.log('Filtered City Departures:', cityDepartures);
 
             setError('');
             setStationName(station);
-            setDepartures(deps);
+            setDepartures(cityDepartures);
         } catch (error) {
             console.error('Error fetching data:', error);
             setError('Fehler beim Laden der Daten');

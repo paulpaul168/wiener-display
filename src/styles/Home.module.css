@@ -47,32 +47,33 @@
 .departureBoard {
     background: #111111;
     border-radius: 16px;
-    padding: 1.5rem;
+    padding: 2rem;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
 }
 
 .boardHeader {
     display: grid;
-    grid-template-columns: 120px 120px 1fr;
-    padding: 1rem;
+    grid-template-columns: 140px 140px 1fr;
+    padding: 1rem 1.5rem;
     background: #1a1a1a;
     border-radius: 12px;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     font-weight: 600;
     color: #666;
     letter-spacing: 0.5px;
+    font-size: 1.1rem;
 }
 
 .departures {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1rem;
 }
 
 .departure {
     display: grid;
-    grid-template-columns: 120px 120px 1fr;
-    padding: 1.25rem;
+    grid-template-columns: 140px 140px 1fr;
+    padding: 1.5rem;
     background: #0a0a0a;
     border-radius: 12px;
     align-items: center;
@@ -87,7 +88,7 @@
 }
 
 .time {
-    font-size: 1.75rem;
+    font-size: 2.25rem;
     font-weight: 700;
     color: #00ff4c;
     font-family: 'SF Mono', 'Roboto Mono', monospace;
@@ -95,7 +96,7 @@
 }
 
 .line {
-    font-size: 1.25rem;
+    font-size: 1.75rem;
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -105,12 +106,12 @@
 
 .accessible {
     color: #00ff4c;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     opacity: 0.9;
 }
 
 .destination {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     color: #ffffff;
     letter-spacing: -0.5px;
 }
@@ -148,17 +149,19 @@
 
     .boardHeader,
     .departure {
-        grid-template-columns: 80px 80px 1fr;
-        font-size: 0.9rem;
+        grid-template-columns: 100px 100px 1fr;
         padding: 1rem;
     }
 
     .time {
+        font-size: 1.75rem;
+    }
+
+    .line {
         font-size: 1.5rem;
     }
 
-    .line,
     .destination {
-        font-size: 1rem;
+        font-size: 1.25rem;
     }
 }

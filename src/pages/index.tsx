@@ -60,7 +60,7 @@ export default function Home() {
             }
 
             const station = data.data.monitors[0].locationStop.properties.title;
-            const deps = data.data.monitors[0].lines[0].departures.departure;
+            const deps = data.data.monitors[0].lines[0].departures.departure.slice(0, 5);
 
             setError('');
             setStationName(station);

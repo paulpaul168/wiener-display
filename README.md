@@ -1,4 +1,8 @@
 # Wiener Linien Display
+![License](https://img.shields.io/badge/License-MIT-blue.svg)
+![GitHub contributors](https://img.shields.io/github/contributors/paulpaul168/wiener-display)
+![GitHub issues](https://img.shields.io/github/issues/paulpaul168/wiener-display)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/paulpaul168/wiener-display)
 
 A real-time departure board for Vienna public transport, designed for Raspberry Pi kiosk displays.
 

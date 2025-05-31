@@ -2,6 +2,10 @@
 
 A real-time departure board for Vienna public transport, designed for Raspberry Pi kiosk displays.
 
+## Screenshot
+
+![Wiener Linien Display Screenshot](screenshot.png)
+
 ## Features
 - Real-time departure information
 - Auto-refresh every 30 seconds
